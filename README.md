@@ -101,6 +101,25 @@ gcloud compute firewall-rules list --filter="network='default'"
 gcloud compute firewall-rules list --filter="NETWORK:'default' AND ALLOW:'icmp'"
 ```
 
+### View the available logs on the system
+```shell
+gcloud logging logs list
+```
+
+### View the logs that relate to compute resources
+```shell
+gcloud logging logs list --filter="compute"
+```
+
+### Read the logs related to the resource type of gce_instance
+```shell
+gcloud logging read "resource.type=gce_instance" --limit 5
+```
+
+### Read the logs for a specific virtual machine
+```shell
+gcloud logging read "resource.type=gce_instance AND labels.instance_name='<INSTANCE_NAME>'" --limit 5
+```
 
 
 
