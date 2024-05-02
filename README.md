@@ -3,7 +3,7 @@ Repository of my study from [Gooogle Cloud Computing Foundations Certificate](ht
 
 # Table of contents
 - [Cloud Shell](#cloud-shell)
-  - [Region and Zones](#regions-and-zones)
+  - [Regions and Zones](#regions-and-zones)
 - [Virtual Machine](#1-create-a-virtual-machine)
   - [SSH Conection](#use-ssh-to-connect-to-your-instance) 
 - [NGINX Web Server](#2-create-a-nginx-web-server)
