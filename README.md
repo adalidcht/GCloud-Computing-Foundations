@@ -5,8 +5,8 @@ Repository of my study from [Gooogle Cloud Computing Foundations Certificate](ht
 - [Cloud Shell](#cloud-shell)
   - [Regions and Zones](#regions-and-zones)
 - [1. Virtual Machine](#1-create-a-virtual-machine)
-- [1.1 Windows Server](#11-remote-desktop-rdp-into-the-windows-server)
-  - [SSH Conection](#use-ssh-to-connect-to-your-instance) 
+  - [1.1 Windows Server](#11-remote-desktop-rdp-into-the-windows-server)
+  - [1.2 SSH Conection](#12-use-ssh-to-connect-to-your-instance) 
 - [2. NGINX Web Server](#2-create-a-nginx-web-server)
 
 
