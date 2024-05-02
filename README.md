@@ -8,6 +8,7 @@ Repository of my study from [Gooogle Cloud Computing Foundations Certificate](ht
   - [1.1 Windows Server](#11-remote-desktop-rdp-into-the-windows-server)
   - [1.2 SSH Conection](#12-use-ssh-to-connect-to-your-instance) 
 - [2. NGINX Web Server](#2-create-a-nginx-web-server)
+  - [2.1 Update the Firewall](#21-update-the-firewall)
 
 
 ## Cloud Shell `>_`
@@ -81,7 +82,7 @@ gcloud components list
 
 ### Filtering
 ```shell
-gcloud compute instances list --filter="name=('VM_NAME')"
+gcloud compute instances list --filter="name=('INSTANCE_NAME')"
 ```
 
 ### List the firewall rules in the project
@@ -253,9 +254,23 @@ gcloud compute ssh <INSTANCE_NAME> --zone=$ZONE
 > When prompted `Do you want to continue? (Y/n)` type `Y`.
 >
 > Disconnect from SSH by exiting from the remote shell: `exit`.
+> 
+> To leave the passphrase empty, press **Enter** twice.
+
+> [!Note]
+> You have connected to a virtual machine and notice how the command prompt changed?
+> 
+> The prompt now says something similar to `sa_107021519685252337470@<INSTANCE_NAME>`.
+> 
+> The reference before the `@` indicates the account being used.
+> 
+> After the `@` sign indicates the host machine being accessed.
+>
+> `ssh username@hostname`
 
 ## 2. Create a NGINX Web Server
 ### Install NGINX
+
 ```shell
 sudo apt-get install -y nginx
 ```
@@ -291,3 +306,48 @@ root      2342  0.0  0.0  12780   988 pts/0    S+   14:07   0:00 grep nginx
 ```shell
 http://EXTERNAL_IP/
 ```
+
+## 2.1 Update the Firewall
+### List the firewall rules for the project
+```shell
+gcloud compute firewall-rules list
+```
+
+> [!Note]
+> Communication with the virtual machine will fail as it does not have an appropriate firewall rule. The **nginx** web server is expecting to communicate on **tcp:80**. To get communication working you need to:
+> 
+> 1. Add a tag to the virtual machine
+>
+> 2. Add a firewall rule for http traffic
+
+### Add a tag to the virtual machine
+```shell
+gcloud compute instances add-tags <INSTANCE_NAME> --tags http-server,https-server
+```
+
+### Update the firewall rule to allow
+```shell
+gcloud compute firewall-rules create <default-allow-http> --direction=INGRESS --priority=1000 --network=default --action=ALLOW --rules=tcp:80 --source-ranges=0.0.0.0/0 --target-tags=http-server
+```
+
+### List the firewall rules for the project
+```shell
+gcloud compute firewall-rules list --filter=ALLOW:'80'
+```
+
+<details>
+  <summary>Expected Output</summary>
+  
+  ```shell
+NAME                  NETWORK  DIRECTION  PRIORITY  ALLOW   DENY  DISABLED
+<default-allow-http>  default  INGRESS    1000      tcp:80        False
+  ```
+</details>
+
+### Verify communication is possible for http to the virtual machine
+```shell
+curl http://$(gcloud compute instances list --filter=name:<INSTANCE_NAME> --format='value(<EXTERNAL_IP>)')
+```
+> You will see the default **nginx** output.
+
+
