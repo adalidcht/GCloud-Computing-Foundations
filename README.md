@@ -9,7 +9,7 @@ Repository of my study from [Gooogle Cloud Computing Foundations Certificate](ht
 - [NGINX Web Server](#2-create-a-nginx-web-server)
 
 
-## Cloud Shell
+## Cloud Shell `>_`
 ### Update the OS
 ```
 sudo apt-get update
@@ -85,15 +85,15 @@ export ZONE=<ZONE>
 ## 1. Create a Virtual Machine
 ### Create a new VM instance
 ```shell
-gcloud compute instances create <VM_NAME> --machine-type <MACHINE_NAME> --zone=$ZONE
+gcloud compute instances create <INSTANCE_NAME> --machine-type <MACHINE_NAME> --zone=$ZONE
 ```
 
 <details>
 <summary>Expected Output</summary> 
   
 ```shell
-Created [..."VM_NAME"].
-     NAME: "VM_NAME"
+Created [..."INSTANCE_NAME"].
+     NAME: "INSTANCE_NAME"
      ZONE:  "ZONE"
      MACHINE_TYPE: "MACHINE_NAME"
      PREEMPTIBLE:
@@ -109,15 +109,52 @@ gcloud compute instances create --help
 ```
 > To exit help, press **CTRL + C**.
 
+## 2. Remote Desktop (RDP) into the Windows Server
+To create a Windows Server, follow these steps while creating a Virtual Machine in
+- Cloud Console:
+1. In the **Boot disk** section, click **Change** to begin configuring your boot disk.
+2. Under **Operating system** select **Windows Server**
+- Cloud Shell
+```shell
+gcloud compute instances create <INSTANCE_NAME> \
+    --image-project windows-cloud \
+    --image-family <IMAGE_FAMILY> \
+    --machine-type <MACHINE_TYPE> \
+    --boot-disk-size <BOOT_DISK_SIZE> \
+    --boot-disk-type <[BOOT_DISK_TYPE>
+```
+<details>
+  <summary>Where</summary>
+
+`<INSTANCE_NAME>` is the name for the new instance.
+
+`<IMAGE_FAMILY>` is one of the public image families for Windows Server images.
+
+`<MACHINE_TYPE>` is one of the available machine types.
+
+`<BOOT_DISK_SIZE>` is the size of the boot disk in GB. Larger persistent disks have higher throughput.
+
+`<BOOT_DISK_TYPE>` is the type of the boot disk for your instance. For example, pd-ssd.
+
+</details>
+### To see whether the server instance is ready for an RDP connection
+```shell
+gcloud compute instances get-serial-port-output <INSTANCE_NAME> --zone=$ZONE
+```
+> If prompted, type `N` and press **ENTER**.
+> 
+> Repeat the command until you see the following in the command output: `Instance setup finished. instance is ready to use.`
+### RDP into a Windows Server
+
 ### Use SSH to connect to your instance
 ```shell
-gcloud compute ssh <VM_NAME> --zone=$ZONE
+gcloud compute ssh <INSTANCE_NAME> --zone=$ZONE
 ```
 > Disconnect from SSH by exiting from the remote shell: `exit`.
 
-## 2. Create a NGINX Web Server
+## 3. Create a NGINX Web Server
 ### Install NGINX
-```
+```shell
 sudo apt-get install -y nginx
 ```
 <details>
@@ -149,6 +186,6 @@ root      2342  0.0  0.0  12780   988 pts/0    S+   14:07   0:00 grep nginx
 </details>
 
 ### To see the web page
-```
+```shell
 http://EXTERNAL_IP/
 ```
