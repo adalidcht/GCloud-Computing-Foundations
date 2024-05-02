@@ -138,6 +138,7 @@ gcloud compute instances create <INSTANCE_NAME> \
 `<BOOT_DISK_TYPE>` is the type of the boot disk for your instance. For example, pd-ssd.
 
 </details>
+
 ### To see whether the server instance is ready for an RDP connection
 ```shell
 gcloud compute instances get-serial-port-output <INSTANCE_NAME> --zone=$ZONE
@@ -145,9 +146,16 @@ gcloud compute instances get-serial-port-output <INSTANCE_NAME> --zone=$ZONE
 > If prompted, type `N` and press **ENTER**.
 > 
 > Repeat the command until you see the following in the command output: `Instance setup finished. instance is ready to use.`
-### RDP into a Windows Server
 
-### Use SSH to connect to your instance
+### To set a password for logging into the RDP
+```shell
+gcloud compute reset-windows-password <instance> --zone $ZONE --user <username>
+```
+> If asked `Would you like to set or reset the password for [admin] (Y/n)?`, enter `Y`.
+> 
+>  Record the password for use in later steps to connect.
+
+## 1.2 Use SSH to connect to your instance
 ```shell
 gcloud compute ssh <INSTANCE_NAME> --zone=$ZONE
 ```
