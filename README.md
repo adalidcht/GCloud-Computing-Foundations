@@ -1,5 +1,5 @@
 # GCloud Computing Foundations
-Repository of [Gooogle Cloud Computing Foundations Certificate](https://www.cloudskillsboost.google/paths/36) & [Google Cloud Essentials](https://www.cloudskillsboost.google/course_templates/621).
+Repository of my study from [Gooogle Cloud Computing Foundations Certificate](https://www.cloudskillsboost.google/paths/36) & [Google Cloud Essentials](https://www.cloudskillsboost.google/course_templates/621).
 
 # Table of contents
 - [Cloud Shell](#cloud-shell)
