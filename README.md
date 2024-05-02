@@ -53,6 +53,57 @@ project = "PROJECT_ID"
 ```
 </details>
 
+### View the project ID
+```shell
+gcloud config get-value project
+```
+
+### View details about the project
+```shell
+gcloud compute project-info describe --project $(gcloud config get-value project)
+```
+
+> [!Note]
+> When the `google-compute-default-region` and `google-compute-default-zone` keys and values are missing from the output, no default zone or region is set.
+
+### View the list of configurations in your environment
+```shell
+gcloud config list
+```
+### To see all properties and their settings
+```shell
+gcloud config list --all
+```
+### List your components
+```shell
+gcloud components list
+```
+
+### Filtering
+```shell
+gcloud compute instances list --filter="name=('VM_NAME')"
+```
+
+### List the firewall rules in the project
+```shell
+gcloud compute firewall-rules list
+
+```
+
+### List the firewall rules for the default network
+```shell
+gcloud compute firewall-rules list --filter="network='default'"
+```
+
+### List the firewall rules for the default network where the allow rule matches an ICMP rule
+```shell
+gcloud compute firewall-rules list --filter="NETWORK:'default' AND ALLOW:'icmp'"
+```
+
+
+
+
+
 ### Regions and Zones
 Regions | Zones
 --- | ---
@@ -77,8 +128,20 @@ export REGION=<REGION>
 ### Create a variable for zone
 ```shell
 export ZONE=<ZONE>
+export ZONE=$(gcloud config get-value compute/zone)
 ```
+
+### Create an enviroment variable for store your PROJECTID
+```shell
+export PROJECT_ID=$(gcloud config get-value project)
+```
+
 > To use the variable: `$VARIABLE`
+
+### To verify that your variables were set properly
+```shell
+echo -e "PROJECT ID: $PROJECT_ID\nZONE: $ZONE"
+```
 
 > [!Note]
 > When you run gcloud on your own machine, the config settings are persisted across sessions. But in Cloud Shell, you need to set this for every new session or reconnection.
@@ -104,10 +167,35 @@ Created [..."INSTANCE_NAME"].
 ```
 </details>
 
+<details>
+<summary>Where</summary> 
+  
+`gcloud compute` allows you to manage your Compute Engine resources in a format that's simpler than the Compute Engine API.
+
+`instances create` creates a new instance.
+
+The `--machine-type` flag specifies the machine type.
+
+The `--zone` flag specifies where the VM is created.
+
+If you omit the `--zone` flag, the gcloud tool can infer your desired zone based on your default properties. Other required instance settings, such as machine type and image, are set to default values if not specified in the create command.
+
+</details>
+
+### List the compute instance available in the project
+```shell
+gcloud compute instances list
+```
+
+
 ### To see all defaults
 ```shell
 gcloud compute instances create --help
 ```
+> Press Enter or the spacebar to scroll through the help content.
+> 
+> To exit the content, type Q.
+> 
 > To exit help, press **CTRL + C**.
 
 ## 1.1 Remote Desktop (RDP) into the Windows Server
@@ -149,16 +237,21 @@ gcloud compute instances get-serial-port-output <INSTANCE_NAME> --zone=$ZONE
 
 ### To set a password for logging into the RDP
 ```shell
-gcloud compute reset-windows-password <instance> --zone $ZONE --user <username>
+gcloud compute reset-windows-password <INSTANCE_NAME> --zone $ZONE --user <USERNAME>
 ```
 > If asked `Would you like to set or reset the password for [admin] (Y/n)?`, enter `Y`.
 > 
 >  Record the password for use in later steps to connect.
 
+### Connect to your server
+Through an RDP app already installed on your computer (Enter the external IP of your VM) or through RDP directly from the **Chrome** browser using the **Spark View** extension (Use your Windows username admin and password you previously recorded). 
+
 ## 1.2 Use SSH to connect to your instance
 ```shell
 gcloud compute ssh <INSTANCE_NAME> --zone=$ZONE
 ```
+> When prompted `Do you want to continue? (Y/n)` type `Y`.
+>
 > Disconnect from SSH by exiting from the remote shell: `exit`.
 
 ## 2. Create a NGINX Web Server
