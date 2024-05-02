@@ -5,6 +5,13 @@
 ```
 sudo apt-get update
 ```
+
+### Table format in Cloud Shell
+```
+gcloud config set accessibility/screen_reader False
+```
+> For more information see [Enabling accessibility features](https://cloud.google.com/sdk/docs/enabling-accessibility-features).
+
 ### List the active account name
 ```shell
 gcloud auth list
@@ -131,6 +138,12 @@ www-data  2332  0.0  0.0 159864  3204 ?        S    14:06   0:00 nginx: worker p
 root      2342  0.0  0.0  12780   988 pts/0    S+   14:07   0:00 grep nginx
 ```
 </details>
+
+### To see the web page
+```
+http://EXTERNAL_IP/
+```
+
 
 
 
