@@ -4,9 +4,10 @@ Repository of my study from [Gooogle Cloud Computing Foundations Certificate](ht
 # Table of contents
 - [Cloud Shell](#cloud-shell)
   - [Regions and Zones](#regions-and-zones)
-- [Virtual Machine](#1-create-a-virtual-machine)
+- [1. Virtual Machine](#1-create-a-virtual-machine)
+- [1.1 Windows Server](#11-remote-desktop-rdp-into-the-windows-server)
   - [SSH Conection](#use-ssh-to-connect-to-your-instance) 
-- [NGINX Web Server](#2-create-a-nginx-web-server)
+- [2. NGINX Web Server](#2-create-a-nginx-web-server)
 
 
 ## Cloud Shell `>_`
@@ -109,7 +110,7 @@ gcloud compute instances create --help
 ```
 > To exit help, press **CTRL + C**.
 
-## 2. Remote Desktop (RDP) into the Windows Server
+## 1.1 Remote Desktop (RDP) into the Windows Server
 To create a Windows Server, follow these steps while creating a Virtual Machine in
 - Cloud Console:
 1. In the **Boot disk** section, click **Change** to begin configuring your boot disk.
@@ -152,7 +153,7 @@ gcloud compute ssh <INSTANCE_NAME> --zone=$ZONE
 ```
 > Disconnect from SSH by exiting from the remote shell: `exit`.
 
-## 3. Create a NGINX Web Server
+## 2. Create a NGINX Web Server
 ### Install NGINX
 ```shell
 sudo apt-get install -y nginx
