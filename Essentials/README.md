@@ -1,15 +1,17 @@
 # [Google Cloud Essentials](https://www.cloudskillsboost.google/course_templates/621)
 
 ## Cloud Shell
+### Update the OS
+```
+sudo apt-get update
+```
 ### List the active account name
 ```shell
 gcloud auth list
 ```
 
 <details>
-<summary>
-Output
-</summary> 
+<summary>Expected Output</summary> 
   
 ```shell
 ACTIVE: *
@@ -26,9 +28,7 @@ gcloud config list project
 ```
 
 <details>
-<summary>
-Output
-</summary> 
+<summary>Expected Output</summary> 
   
 ```shell
 [core]
@@ -41,6 +41,7 @@ Regions | Zones
 --- | ---
 Regions are collections of zones. | A zone is a deployment area within a region.
 Zones have high-bandwidth, low-latency network connections to other zones in the same region. | The fully-qualified name for a zone is made up of `<region>-<zone>`.
+
 ### Set the project region by default
 ```shell
 gcloud config set compute/region <REGION>
@@ -72,9 +73,7 @@ gcloud compute instances create <VM_NAME> --machine-type <MACHINE_NAME> --zone=$
 ```
 
 <details>
-<summary>
-Output
-</summary> 
+<summary>Expected Output</summary> 
   
 ```shell
 Created [..."VM_NAME"].
@@ -99,5 +98,39 @@ gcloud compute instances create --help
 gcloud compute ssh <VM_NAME> --zone=$ZONE
 ```
 > Disconnect from SSH by exiting from the remote shell: `exit`.
+
 ## 2. Create a NGINX Web Server
+### Install NGINX
+```
+sudo apt-get install -y nginx
+```
+<details>
+  <summary>Expected Output</summary>
+  
+ ```shell
+  Reading package lists... Done
+  Building dependency tree
+  Reading state information... Done
+  The following additional packages will be installed:
+  ...
+  ```
+</details>
+
+### Confirm that NGINX is running
+```shell
+ps auwx | grep nginx
+```
+
+<details>
+  <summary>Expected Output</summary>
+  
+```shell
+root      2330  0.0  0.0 159532  1628 ?        Ss   14:06   0:00 nginx: master process /usr/sbin/nginx -g daemon on; master_process on;
+www-data  2331  0.0  0.0 159864  3204 ?        S    14:06   0:00 nginx: worker process
+www-data  2332  0.0  0.0 159864  3204 ?        S    14:06   0:00 nginx: worker process
+root      2342  0.0  0.0  12780   988 pts/0    S+   14:07   0:00 grep nginx
+```
+</details>
+
+
 
