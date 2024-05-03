@@ -13,6 +13,7 @@ Repository of my study from [Gooogle Cloud Computing Foundations Certificate](ht
   - [3.1 Deploy an application](#31-deploy-an-application-to-the-cluster)
 - [4. Set Up Network and HTTP Load Balancers](4-set-up-network-and-http-load-balancers)
   - [4.1 Create multiple web server instances](#41-create-multiple-web-server-instances)
+  - [4.2 Configure the load balancing service](#42-configure-the-load-balancing-service)
 
 ## Cloud Shell `>_`
 Cloud Shell is a **Debian-based** virtual machine with a persistent 5-GB home directory, which makes it easy for you to manage your Google Cloud projects and resources. 
@@ -512,7 +513,7 @@ There are several ways you can load balance on Google Cloud. Here you will set u
 ### Create a virtual machine `<www1>` in your default zone
 ```shell
 gcloud compute instances create <www1> \
-  --zone=Zone \
+  --zone=$ZONE \
   --tags=network-lb-tag \
   --machine-type=e2-small \
   --image-family=debian-11 \
@@ -543,7 +544,50 @@ curl http://<IP_ADDRESS>
 ```
 > Replace <IP_ADDRESS> with the IP address for each of your VMs.
 
+## 4.2 Configure the load balancing service
+When you configure the load balancing service, your virtual machine instances receives packets that are destined for the static external IP address you configure. Instances made with a Compute Engine image are automatically configured to handle this IP address.
+> [!Note]
+> Learn more about how to set up network load balancing from the [External TCP/UDP Network Load Balancing overview Guide](https://cloud.google.com/compute/docs/load-balancing/network/).
 
+### Create a static external IP address for your load balancer
+```shell
+gcloud compute addresses create <network-lb-ip-1> \
+  --region $REGION
+```
+<details>
+  <summary>Expected Output</summary>
+
+```shell
+Created [https://www.googleapis.com/compute/v1/projects/qwiklabs-gcp-03-xxxxxxxxxxx/regions//addresses/network-lb-ip-1].
+```
+  
+</details>
+
+ ### Add a legacy HTTP health check resource
+ ```shell
+gcloud compute http-health-checks create <basic-check>
+```
+
+### To create the target pool and use the health check, which is required for the service to function
+```shell
+gcloud compute target-pools create <www-pool> \
+  --region $REGION --http-health-check <basic-check>
+```
+
+### Add the instances to the pool:
+```shell
+gcloud compute target-pools add-instances <www-pool> \
+    --instances <www1>,<www2>,<www3>
+```
+
+### Add a forwarding rule
+```shell
+gcloud compute forwarding-rules create <www-rule> \
+    --region  $REGION \
+    --ports 80 \
+    --address <network-lb-ip-1> \
+    --target-pool <www-pool>
+```
 
 
 
