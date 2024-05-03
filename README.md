@@ -10,8 +10,8 @@ Repository of my study from [Gooogle Cloud Computing Foundations Certificate](ht
 - [2. NGINX Web Server](#2-create-a-nginx-web-server)
   - [2.1 Update the Firewall](#21-update-the-firewall)
 - [3. Kubernetes Engine](#3-kubernetes-engine)
-  - [Deploy an application](#31-deploy-an-application-to-the-cluster)
- 
+  - [3.1 Deploy an application](#31-deploy-an-application-to-the-cluster)
+- [4. Set Up Network and HTTP Load Balancers](4-set-up-network-and-http-load-balancers)
 
 ## Cloud Shell `>_`
 Cloud Shell is a **Debian-based** virtual machine with a persistent 5-GB home directory, which makes it easy for you to manage your Google Cloud projects and resources. 
@@ -494,7 +494,15 @@ http://<EXTERNAL-IP>:8080
 The browser tab displays the message **Hello, world!** as well as the version and hostname.
 </details>
 
+### To delete the cluster
+```shell
+gcloud container clusters delete lab-cluster
+```
+> When prompted, type `Y` to confirm.
+>
+> Deleting the cluster can take a few minutes.
 
+## 4. Set Up Network and HTTP Load Balancers
 
 
 
