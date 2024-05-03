@@ -597,6 +597,33 @@ gcloud compute forwarding-rules create <www-rule> \
 
 ## 4.3 Sending traffic to your instances
 
+### To view the external IP address of the `<www-rule>` forwarding rule used by the load balancer
+```shell
+gcloud compute forwarding-rules describe <www-rule> --region $REGION
+```
+
+### Access the external IP address
+```shell
+IPADDRESS=$(gcloud compute forwarding-rules describe <www-rule> --region $REGION --format="json" | jq -r .IPAddress)
+```
+
+### Show the external IP address
+```shell
+echo $IPADDRESS
+```
+
+### To access the external IP address
+```shell
+while true; do curl -m1 $IPADDRESS; done
+```
+>  Replacing `IP_ADDRESS` with an external IP address from the previous command
+> 
+> Use Ctrl + C to stop running the command.
+
+> [!Note]
+> The response from the `curl` command alternates randomly among the three instances. If your response is initially unsuccessful, wait approximately 30 seconds for the configuration to be fully loaded and for your instances to be marked healthy before trying again.
+
+
 
 
 
