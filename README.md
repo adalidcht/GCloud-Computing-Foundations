@@ -12,6 +12,7 @@ Repository of my study from [Gooogle Cloud Computing Foundations Certificate](ht
 - [3. Kubernetes Engine](#3-kubernetes-engine)
   - [3.1 Deploy an application](#31-deploy-an-application-to-the-cluster)
 - [4. Set Up Network and HTTP Load Balancers](4-set-up-network-and-http-load-balancers)
+  - [4.1 Create multiple web server instances](#41-create-multiple-web-server-instances)
 
 ## Cloud Shell `>_`
 Cloud Shell is a **Debian-based** virtual machine with a persistent 5-GB home directory, which makes it easy for you to manage your Google Cloud projects and resources. 
@@ -503,6 +504,44 @@ gcloud container clusters delete lab-cluster
 > Deleting the cluster can take a few minutes.
 
 ## 4. Set Up Network and HTTP Load Balancers
+There are several ways you can load balance on Google Cloud. Here you will set up the following load balancers:
+- **Network Load Balancer**
+- **HTTP(s) Load Balancer**
+
+## 4.1 Create multiple web server instances
+### Create a virtual machine `<www1>` in your default zone
+```shell
+gcloud compute instances create <www1> \
+  --zone=Zone \
+  --tags=network-lb-tag \
+  --machine-type=e2-small \
+  --image-family=debian-11 \
+  --image-project=debian-cloud \
+  --metadata=startup-script='#!/bin/bash
+    apt-get update
+    apt-get install apache2 -y
+    service apache2 restart
+    echo "
+<h3>Web Server: <www1></h3>" | tee /var/www/html/index.html'
+```
+> For this load balancing scenario, three Compute Engine VM instances were created, and **Apache** was installed on each of them.
+
+### Create a firewall rule to allow external traffic to the VM instances
+```shell
+gcloud compute firewall-rules create <www-firewall-network-lb> \
+    --target-tags network-lb-tag --allow tcp:80
+```
+> Now you need to get the external IP addresses of your instances and verify that they are running.
+
+### Run the following to list your instances
+```shell
+gcloud compute instances list
+```
+### Verify that each instance is running 
+```shell
+curl http://<IP_ADDRESS>
+```
+> Replace <IP_ADDRESS> with the IP address for each of your VMs.
 
 
 
