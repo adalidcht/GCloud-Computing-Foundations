@@ -1,6 +1,11 @@
 # Google Cloud Computing Foundations
 Repository of my study from [Gooogle Cloud Computing Foundations Certificate](https://www.cloudskillsboost.google/paths/36) & [Google Cloud Essentials](https://www.cloudskillsboost.google/course_templates/621).
 
+> [!Important]
+> Copyright 2024 Google LLC All rights reserved. Google and the Google logo are trademarks of Google LLC. All other company and product names may be trademarks of the respective companies with which they are associated.
+
+
+
 # Table of contents
 - [Cloud Shell](#cloud-shell-_)
   - [Regions and Zones](#regions-and-zones)
