@@ -14,6 +14,7 @@ Repository of my study from [Gooogle Cloud Computing Foundations Certificate](ht
 - [4. Set Up Network and HTTP Load Balancers](4-set-up-network-and-http-load-balancers)
   - [4.1 Create multiple web server instances](#41-create-multiple-web-server-instances)
   - [4.2 Configure the load balancing service](#42-configure-the-load-balancing-service)
+  - [4.3 Sending traffic to your instances](#43-sending-traffic-to-your-instances)
 
 ## Cloud Shell `>_`
 Cloud Shell is a **Debian-based** virtual machine with a persistent 5-GB home directory, which makes it easy for you to manage your Google Cloud projects and resources. 
@@ -588,6 +589,9 @@ gcloud compute forwarding-rules create <www-rule> \
     --address <network-lb-ip-1> \
     --target-pool <www-pool>
 ```
+
+## 4.3 Sending traffic to your instances
+
 
 
 
