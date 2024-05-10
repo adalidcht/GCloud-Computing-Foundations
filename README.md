@@ -22,6 +22,7 @@ Repository of my study from [Gooogle Cloud Computing Foundations Certificate](ht
   - [4.3 Sending traffic to your instances](#43-sending-traffic-to-your-instances)
   - [4.4 Create an HTTP load balancer](#44-create-an-http-load-balancer)
   - [4.5 Testing traffic sent to your instances](#45-testing-traffic-sent-to-your-instances)
+- [App Engine with Python](#5-app-engine-with-python)
 
 ## Cloud Shell `>_`
 Cloud Shell is a **Debian-based** virtual machine with a persistent 5-GB home directory, which makes it easy for you to manage your Google Cloud projects and resources. 
@@ -766,6 +767,133 @@ gcloud compute forwarding-rules create <http-content-rule> \
 >
 > Your browser should render a page with content showing the name of the instance that served the page, along with its zone (for example, Page served from: `lb-backend-group-xxxx`).
 
+## 5. App Engine with python
+App Engine allows developers to focus on doing what they do best, writing code, and not what it runs on. The notion of servers, virtual machines, and instances have been abstracted away, with App Engine providing all the compute necessary. Developers don't have to worry about operating systems, web servers, logging, monitoring, load-balancing, system administration, or scaling, as App Engine takes care of all that. 
 
+## 5.1 Enable Google App Engine Admin API
+The App Engine Admin API enables developers to provision and manage their App Engine Applications.
+### In the Cloud Console
+1. In the left Navigation menu, click **APIs & Services** > **Library**.
+2. Type **"App Engine Admin API"** in the search box.
+3. Click the App Engine Admin API card.
+   
+> If there is no prompt to enable the API, then it is already enabled and no action is needed.
+
+## 5.2 Download the Hello World app
+There is a simple Hello World app for Python you can use to quickly get a feel for deploying an app to Google Cloud.
+### To copy the Hello World sample app repository to your Google Cloud instance
+```shell
+git clone https://github.com/GoogleCloudPlatform/python-docs-samples.git
+```
+### Go to the directory that contains the sample code
+```shell
+cd python-docs-samples/appengine/standard_python3/hello_world
+```
+
+## 5.3 Test the application
+Test the application using the Google Cloud development server (dev_appserver.py), which is included with the preinstalled App Engine SDK.
+
+### Start the Google Cloud development server
+> From within your helloworld directory where the app's app.yaml configuration file is located
+```shell
+dev_appserver.py app.yaml
+```
+> The development server is now running and listening for requests on port 8080.
+>
+> View the results by clicking the **Web preview** > **Preview on port 8080**.
+>
+> You'll see a **"Hello World!"** in a new browser window.
+
+## 5.4 Make a change
+You can leave the development server running while you develop your application. The development server watches for changes in your source files and reloads them if necessary.
+### Leave the development server running
+### Click the (**+**) next to your Cloud Shell tab to open a new command line session
+### To go to the directory that contains the sample code
+```shell
+cd python-docs-samples/appengine/standard_python3/hello_world
+```
+### To open main.py in nano to edit the content
+```shell
+nano main.py
+```
+> Change **"Hello World!"** to **"Hello, Cruel World!"**.
+> Save the file with CTRL-S and exit with CTRL-X.
+### Reload the **Hello World! Browser** or click the **Web Preview** > **Preview on port 8080** to see the results
+> Browser window with **Hello, Cruel World!** on the page.
+
+## 5.5 Deploy your app
+### To deploy your app to App Engine
+> From within the root directory of your application where the app.yaml file is located
+```shell
+gcloud app deploy
+```
+
+### Enter the number that represents your region
+> The App Engine application will then be created.
+
+<details>
+  <summary>Expected Output</summary>
+
+```shell
+Creating App Engine application in project [qwiklabs-gcp-233dca09c0ab577b] and region ["REGION"]....done.
+Services to deploy:
+
+descriptor:      [/home/gcpstaging8134_student/python-docs-samples/appengine/standard/hello_world/app.yaml]
+source:          [/home/gcpstaging8134_student/python-docs-samples/appengine/standard/hello_world]
+target project:  [qwiklabs-gcp-233dca09c0ab577b]
+target service:  [default]
+target version:  [20171117t072143]
+target url:      [https://qwiklabs-gcp-233dca09c0ab577b.appspot.com]
+
+Do you want to continue (Y/n)?
+```
+</details>
+
+> Enter Y when prompted to confirm the details and begin the deployment of service.
+
+<details>
+  <summary>Expected Output</summary>
+
+```shell
+Beginning deployment of service [default]...
+Some files were skipped. Pass `--verbosity=info` to see which ones.
+You may also view the gcloud log file, found at
+[/tmp/tmp.dYC7xGu3oZ/logs/2017.11.17/07.18.27.372768.log].
+╔════════════════════════════════════════════════════════════╗
+╠═ Uploading 5 files to Google Cloud Storage                ═╣
+╚════════════════════════════════════════════════════════════File upload done.
+Updating service [default]...done.
+Waiting for operation [apps/qwiklabs-gcp-233dca09c0ab577b/operations/2e88ab76-33dc-4aed-93c4-fdd944a95ccf] to complete...done.
+Updating service [default]...done.
+Deployed service [default] to [https://qwiklabs-gcp-233dca09c0ab577b.appspot.com]
+
+You can stream logs from the command line by running:
+  $ gcloud app logs tail -s default
+
+To view your application in the web browser run:
+  $ gcloud app browse
+```
+</details>
+
+> [!Note]
+> If you receive an error as "Unable to retrieve P4SA" while deploying the app, then re-run the above command.
+
+### 5.6 View your application
+### To launch your browser enter the following command
+```shell
+gcloud app browse
+```
+> Click on the link it provides:
+
+<details>
+  <summary>Expected Output</summary>
+
+```shell
+Did not detect your browser. Go to this link to view your app:
+https://qwiklabs-gcp-233dca09c0ab577b.appspot.com
+```
+</details>
+
+> Your application is deployed and you can read the short message in your browser.
 
 
