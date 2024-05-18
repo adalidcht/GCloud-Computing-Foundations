@@ -29,12 +29,11 @@ Repository of my study from [Gooogle Cloud Computing Foundations Certificate](ht
   - [5.4 Make a change](#54-make-a-change)
   - [5.5 Deploy your App](#55-deploy-your-app)
 - [6. Cloud Functions](#6-cloud-functions)
-  - [](url)
-  - [](url)
-  - [](url)
-  - [](url)
-  - [](url)
-  - [](url)
+  - [6.1 Create a function](#61-create-a-function)
+  - [6.2 Create a cloud storage bucket](#62-create-a-cloud-storage-bucket)
+  - [6.3 Deploy your function](#63-deploy-your-function)
+  - [6.4 Test the function](#64-test-the-function)
+  - [6.5 View logs](#65-view-logs)
  
 
 
