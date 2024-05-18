@@ -28,6 +28,13 @@ Repository of my study from [Gooogle Cloud Computing Foundations Certificate](ht
   - [5.3 Test the application](#53-test-the-application)
   - [5.4 Make a change](#54-make-a-change)
   - [5.5 Deploy your App](#55-deploy-your-app)
+- [6. Cloud Functions](#6-cloud-functions)
+  - [](url)
+  - [](url)
+  - [](url)
+  - [](url)
+  - [](url)
+  - [](url)
  
 
 
@@ -885,7 +892,7 @@ To view your application in the web browser run:
 > [!Note]
 > If you receive an error as "Unable to retrieve P4SA" while deploying the app, then re-run the above command.
 
-### 5.6 View your application
+## 5.6 View your application
 ### To launch your browser enter the following command
 ```shell
 gcloud app browse
@@ -902,5 +909,155 @@ https://qwiklabs-gcp-233dca09c0ab577b.appspot.com
 </details>
 
 > Your application is deployed and you can read the short message in your browser.
+
+## 6. Cloud Functions
+A cloud function is a piece of code that runs in response to an event, such as an HTTP request, a message from a messaging service, or a file upload. Cloud events are things that happen in your cloud environment.
+
+## 6.1 Create a function
+> This function writes a message to the Cloud Functions logs.
+>
+> It is triggered by cloud function events and accepts a callback function used to signal completion of the function.
+>
+> The cloud function event is a cloud pub/sub topic event. A pub/sub is a messaging service where the senders of messages are decoupled from the receivers of messages. When a message is sent or posted, a subscription is required for a receiver to be alerted and receive the message. To learn more: [A Google-Scale Messaging Service.](https://cloud.google.com/pubsub/architecture)
+
+### Set the default region
+```shell
+gcloud config set compute/region <REGION>
+```
+
+### Create a directory for the function code
+```shell
+mkdir gcf_hello_world
+```
+
+### Move to the gcf_hello_world directory
+```shell
+cd gcf_hello_world
+```
+### Create and open index.js to edit
+```shell
+nano index.js
+```
+
+### Copy the following into the index.js file
+```javascript
+/**
+* Background Cloud Function to be triggered by Pub/Sub.
+* This function is exported by index.js, and executed when
+* the trigger topic receives a message.
+*
+* @param {object} data The event payload.
+* @param {object} context The event metadata.
+*/
+exports.helloWorld = (data, context) => {
+const pubSubMessage = data;
+const name = pubSubMessage.data
+    ? Buffer.from(pubSubMessage.data, 'base64').toString() : "Hello World";
+
+console.log(`My Cloud Function: ${name}`);
+};
+```
+> Exit nano (Ctrl+x) and save (Y) the file.
+
+## 6.2 Create a Cloud Storage bucket
+### To create a new Cloud Storage bucket
+```shell
+gsutil mb -p <PROJECT_ID> gs://<BUCKET_NAME>
+```
+
+## 6.3 Deploy your function
+> When deploying a new function, you must specify `--trigger-topic`, `--trigger-bucket`, or `--trigger-http`. When deploying an update to an existing function, the function keeps the existing trigger unless otherwise specified.
+
+### Disable the Cloud Functions API
+```shell
+gcloud services disable cloudfunctions.googleapis.com
+```
+### Re-enable the Cloud Functions API
+```shell
+gcloud services enable cloudfunctions.googleapis.com
+```
+### Add the `artifactregistry.reader` permission for your appspot service account
+```shell
+gcloud projects add-iam-policy-binding <PROJECT_ID> \
+--member="serviceAccount:<PROJECT_ID>@appspot.gserviceaccount.com" \
+--role="roles/artifactregistry.reader"
+```
+
+### Deploy the function to a pub/sub topic
+```shell
+gcloud functions deploy helloWorld \
+  --stage-bucket <BUCKET_NAME> \
+  --trigger-topic hello_world \
+  --runtime nodejs20
+```
+
+> [!Note]
+>  If you get OperationError, ignore the warning and re-run the command.
+
+> If prompted, enter Y to allow unauthenticated invocations of a new function.
+
+### Verify the status of the function
+```shell
+gcloud functions describe helloWorld
+````
+> An ACTIVE status indicates that the function has been deployed.
+>
+> Every message published in the topic triggers function execution, the message contents are passed as input data.
+
+
+## 6.4 Test the function
+After you deploy the function and know that it's active, test that the function writes a message to the cloud log after detecting an event.
+
+### To create a message test of the function
+```shell
+DATA=$(printf 'Hello World!'|base64) && gcloud functions call helloWorld --data '{"data":"'$DATA'"}'
+```
+> The cloud tool returns the execution ID for the function, which means a message has been written in the log.
+
+<details>
+  <summary> Example Output</summary>
+  
+  ```shell
+  executionId: 3zmhpf7l6j5b
+  ```
+</details>
+
+> View logs to confirm that there are log messages with that execution ID.
+
+### 6.5 View logs
+### Check the logs to see your messages in the log history
+```shell
+gcloud functions logs read helloWorld
+```
+<details>
+  <summary> Example Output</summary>
+  
+  ```shell
+  LEVEL: D
+  NAME: helloWorld
+  EXECUTION_ID: 4bgl3jw2a9i3
+  TIME_UTC: 2023-03-23 13:45:31.545
+  LOG: Function execution took 912 ms, finished with status: 'ok'
+   
+  LEVEL: I
+  NAME: helloWorld
+  EXECUTION_ID: 4bgl3jw2a9i3
+  TIME_UTC: 2023-03-23 13:45:31.533
+  LOG: My Cloud Function: Hello World!
+   
+  LEVEL: D
+  NAME: helloWorld
+  EXECUTION_ID: 4bgl3jw2a9i3
+  TIME_UTC: 2023-03-23 13:45:30.633
+  LOG: Function execution started
+  ```
+</details>
+
+> [!Note]
+> The logs will take around 10 mins to appear. Also, the alternative way to view the logs is, go to Logging > Logs Explorer.
+
+> Your application is deployed, tested, and you can view the logs.
+
+
 
 
