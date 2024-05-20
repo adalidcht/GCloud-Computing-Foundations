@@ -35,7 +35,14 @@ Repository of my study from [Gooogle Cloud Computing Foundations Certificate](ht
   - [6.4 Test the function](#64-test-the-function)
   - [6.5 View logs](#65-view-logs)
 - [7. Cloud Storage: CLI/SDK](#7-cloud-storage)
- 
+  - [7.1 Create a Bucket](#71-create-a-bucket)
+  - [7.2 Upload an object into your bucket](7.2-upload-an-object-into-your-bucket)
+  - [7.3 Download an object from your bucket](#73-download-an-object-from-your-bucket)
+  - [7.4 Copy an object to a folder in the bucket](###74-copy-an-object-to-a-folder-in-the-bucket)
+  - [7.5 List contents of a bucket or folder](#75-list-contents-of-a-bucket-or-folder)
+  - [7.6 List details for an object](#76-list-details-for-an-object)
+  - [7.7 Make your object publicly accessible](#77-make-your-object-publicly-accessible)
+  - [7.8 Remove public access](#7.8-remove-public-access)
 
 
 ## Cloud Shell `>_`
