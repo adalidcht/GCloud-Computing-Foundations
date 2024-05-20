@@ -1264,7 +1264,7 @@ gsutil rm gs://YOUR-BUCKET-NAME/ada.jpg
 > [!Warning]
 > If you choose a preset larger than Development, your project will be flagged and your lab will be terminated.
 
-- Set **Region** as <REGION>.
+- Set **Region** as \<REGION\>.
 - Set the **Multi zones** (Highly available) > **Primary Zone** field as <ZONE>.
 - Click **CREATE INSTANCE**.
  
