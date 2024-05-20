@@ -1113,5 +1113,92 @@ gsutil cp ada.jpg gs://YOUR-BUCKET-NAME
 rm ada.jpg
 ```
 
+## 7.3 Download an object from your bucket
 
+### To download the image you stored in your bucket to Cloud Shell
+```shell
+gsutil cp -r gs://YOUR-BUCKET-NAME/ada.jpg .
+```
+
+<details>
+  <summary>Expected Output</summary>
+
+  ```shell
+  Copying gs://YOUR-BUCKET-NAME/ada.jpg...
+  / [1 files][360.1 KiB/2360.1 KiB]
+  Operation completed over 1 objects/360.1 KiB.
+  ```
+</details>
+
+
+## 7.4. Copy an object to a folder in the bucket
+### To create a folder called image-folder and copy the image (ada.jpg) into it
+```shell
+gsutil cp gs://YOUR-BUCKET-NAME/ada.jpg gs://YOUR-BUCKET-NAME/image-folder/
+```
+
+> [!Note[
+> Compared to local file systems, folders in Cloud Storage have limitations, but many of the same operations are supported.
+
+<details>
+  <summary>Expected Output</summary>
+
+  ```shell
+  Copying gs://YOUR-BUCKET-NAME/ada.jpg [Content-Type=image/png]...
+  - [1 files] [ 360.1 KiB/ 360.1 KiB]
+  Operation completed over 1 objects/360.1 KiB
+  ```
+</details>
+
+## 7.5 List contents of a bucket or folder
+### To list the contents of the bucket
+```shell
+gsutil ls gs://YOUR-BUCKET-NAME
+```
+
+<details>
+  <summary>Expected Output</summary>
+
+  ```shell
+  gs://YOUR-BUCKET-NAME/ada.jpg
+  gs://YOUR-BUCKET-NAME/image-folder/
+  ```
+</details>
+
+## 7.6 List details for an object
+### To get some details about the image file you uploaded to your bucket
+```shell
+gsutil ls -l gs://YOUR-BUCKET-NAME/ada.jpg
+```
+
+<details>
+  <summary>Expected Output</summary>
+
+  ```shell
+  306768  2017-12-26T16:07:570Z  gs://YOUR-BUCKET-NAME/ada.jpg
+  TOTAL: 1 objects, 30678 bytes (360.1 KiB)
+  ```
+</details>
+
+## 7.7 Make your object publicly accessible
+### To grant all users read permission for the object stored in your bucket
+```shell
+gsutil acl ch -u AllUsers:R gs://YOUR-BUCKET-NAME/ada.jpg
+```
+
+<details>
+  <summary>Expected Output</summary>
+
+  ```shell
+  Updated ACL on gs://YOUR-BUCKET-NAME/ada.jpg
+  ```
+</details>
+
+> Your image is now public, and can be made available to anyone.
+
+### Validate that your image is publicly available
+
+Go to **Navigation menu** > **Cloud Storage**, then click on the name of your bucket.
+
+You should see your image with the Public link box. Click the Copy URL and open the URL in a new browser tab.
 
