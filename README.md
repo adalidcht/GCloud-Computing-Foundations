@@ -1188,6 +1188,9 @@ gsutil ls -l gs://YOUR-BUCKET-NAME/ada.jpg
 </details>
 
 ## 7.7 Make your object publicly accessible
+
+> `acl` Acces Control list. Mechanism you can use to define who has acces to your bucket and objects.
+
 ### To grant all users read permission for the object stored in your bucket
 ```shell
 gsutil acl ch -u AllUsers:R gs://YOUR-BUCKET-NAME/ada.jpg
