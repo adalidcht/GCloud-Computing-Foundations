@@ -1230,4 +1230,5 @@ gsutil rm gs://YOUR-BUCKET-NAME/ada.jpg
   Removing gs://YOUR-BUCKET-NAME/ada.jpg...
   ```
 </details>
+
 > Refresh the console. The copy of the image file is no longer stored on Cloud Storage (though the copy you made in the image-folder/ folder still exists). 
