@@ -1202,3 +1202,32 @@ Go to **Navigation menu** > **Cloud Storage**, then click on the name of your bu
 
 You should see your image with the Public link box. Click the Copy URL and open the URL in a new browser tab.
 
+## 7.8 Remove public access
+### To remove this permission, use the command:
+```shell
+gsutil acl ch -d AllUsers gs://YOUR-BUCKET-NAME/ada.jpg
+```
+
+<details>
+  <summary>Expected Output</summary>
+
+  ```shell
+  Updated ACL on gs://YOUR-BUCKET-NAME/ada.jpg
+  ```
+</details>
+
+> Verify that you've removed public access by clicking the Refresh button in the console. The checkmark will be removed.
+
+### To delete an object - the image file in your bucket
+```shell
+gsutil rm gs://YOUR-BUCKET-NAME/ada.jpg
+```
+
+<details>
+  <summary>Expected Output</summary>
+
+  ```shell
+  Removing gs://YOUR-BUCKET-NAME/ada.jpg...
+  ```
+</details>
+> Refresh the console. The copy of the image file is no longer stored on Cloud Storage (though the copy you made in the image-folder/ folder still exists). 
