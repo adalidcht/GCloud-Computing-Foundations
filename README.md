@@ -1092,5 +1092,26 @@ gsutil mb gs://<YOUR-BUCKET-NAME>
 > [!Note]
 > If the bucket name is already taken, either by you or someone else, try again with a different bucket name.
 
+## 7.2 Upload an object into your bucket
+
+### To download this image (ada.jpg) into your bucket
+```shell
+curl https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Ada_Lovelace_portrait.jpg/800px-Ada_Lovelace_portrait.jpg --output ada.jpg
+```
+### To upload the image from the location where you saved it to the bucket you created
+```shell
+gsutil cp ada.jpg gs://YOUR-BUCKET-NAME
+```
+
+> [!Note]
+> When typing your bucket name, you can use the tab key to autocomplete it.
+>
+> You can see the image load into your bucket from the command line.
+
+### Now remove the downloaded image
+```shell
+rm ada.jpg
+```
+
 
 
