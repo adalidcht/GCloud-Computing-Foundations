@@ -1369,7 +1369,7 @@ Expected Output
 Service Configuration [2017-02-13-r2] uploaded for service [airports-api.endpoints.example-project.cloud.goog]
 ```
 
-## 9.4 Deploying the API backend
+## 9.3 Deploying the API backend
 > To deploy the API backend, make sure you are in the endpoints-quickstart/scripts directory. 
 
 ### To deploy the API backend run the script
@@ -1382,22 +1382,83 @@ Service Configuration [2017-02-13-r2] uploaded for service [airports-api.endpoin
 
 > [!Note]
 > If you get an `ERROR: NOT_FOUND: Unable to retrieve P4SA: from GAIA` message, rerun the `deploy_app.sh` script.
-You'll see the following displayed in Cloud Shell after the App Engine is created:
+>
+> You'll see the following displayed in Cloud Shell after the App Engine is created:
 
+```shell
 Success! The app is now created. Please use `gcloud app deploy` to deploy your first app.
-The script goes on to run the gcloud app deploy command to deploy the sample API to App Engine.
+```
+
+The script goes on to run the `gcloud app deploy` command to deploy the sample API to App Engine.
 
 Expected Output
 ```shell
 Deploying ../app/app_template.yaml...You are about to deploy the following services:
 ```
+
 > It takes several minutes for the API to be deployed to App Engine.
+> 
 > You'll see a line like the following when the API is successfully deployed to App Engine:
 
 Expected Output
 ```shell
 Deployed service [default] to [https://example-project.appspot.com]
 ```
+
+## 9.4 Sending requests to the API
+### To send requests to he sample API by running the following script
+```shell
+./query_api.sh
+```
+
+The script echoes the curl command that it uses to send a request to the API, and then displays the result. You'll see something like the following in Cloud Shell:
+```shell
+curl "https://example-project.appspot.com/airportName?iataCode=SFO"
+San Francisco International Airport
+```
+> The API expects one query parameter, `iataCode`, that is set to a valid IATA airport code such as SEA or JFK.
+
+### To test, run this example in Cloud Shell
+```shell
+./query_api.sh JFK
+```
+
+### 9.5 Tracking API activity
+> With APIs deployed with Cloud Endpoints, you can monitor critical operations metrics in the Cloud Console and gain insight into your users and usage with Cloud Logging.
+
+### Run this traffic generation script in Cloud Shell to populate the graphs and logs
+```shell
+./generate_traffic.sh
+```
+
+> [!Note]
+> This script generates requests in a loop and automatically times out in 5 minutes. To end the script sooner, enter **CTRL+C** in Cloud Shell.
+
+### To look at the activity graphs for your service
+_In the Console:_
+
+**Navigation menu** > **Endpoints** > **Services** and click **Airport Codes service**. 
+
+> It may take a few moments for the requests to be reflected in the graphs.
+
+### You can do this while you wait for data to be displayed
+
+- _Permissions Panel:_
+
+The Permissions panel allows you to control who has access to your API and the level of access.
+
+- _Deployment history tab:_
+
+This tab displays a history of your API deployments, including the deployment time and who deployed the change.
+
+- _Overview tab:_
+
+Here you'll see the traffic coming in. After the traffic generation script has been running for a minute, scroll down to see the three lines on the Total latency graph (50th, 95th, and 99th percentiles). This data provides a quick estimate of response times.
+
+### To view the logs
+At the bottom of the **Endpoints graphs**, under **Method**, click the **View logs** link for **GET/airportName**. The** Logs Viewer** page displays the request logs for the API.
+
+> Enter CTRL+C in Cloud Shell to stop the script.
 
 
 
