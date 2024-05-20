@@ -1248,7 +1248,9 @@ gsutil rm gs://YOUR-BUCKET-NAME/ada.jpg
 
 > Refresh the console. The copy of the image file is no longer stored on Cloud Storage (though the copy you made in the image-folder/ folder still exists). 
 
-## 8. Create a Cloud SQL instance
+## 8. Cloud SQL for MySQL
+
+## 8.1 Create a Cloud SQL instance
 ### Cloud Console
 - From the **Navigation menu** > **SQL**.
 - Click **Create Instance**.
@@ -1269,4 +1271,62 @@ gsutil rm gs://YOUR-BUCKET-NAME/ada.jpg
 > It might take a few minutes for the instance to be created. Once it is, you will see a green checkmark next to the instance name.
 
 - Click on the Cloud SQL instance. The SQL Overview page opens.
+
+## 8.2 Connect to your instance using the mysql client in Cloud Shell
+### To connect to your Cloud SQL
+```shelll
+gcloud sql connect myinstance --user=root
+```
+
+> Enter your root password when prompted. **Note:** The cursor will not move.
+>
+> Press the Enter key when you're done typing.
+>
+> You should now see the `mysql` prompt.
+
+## 8.3 Create a database and upload data
+### To create a SQL database called guestbook on your Cloud SQL instance
+```shell
+CREATE DATABASE guestbook;
+```
+
+### Insert the following sample data into the guestbook databas
+```mysql
+USE guestbook;
+CREATE TABLE entries (guestName VARCHAR(255), content VARCHAR(255),
+    entryID INT NOT NULL AUTO_INCREMENT, PRIMARY KEY(entryID));
+    INSERT INTO entries (guestName, content) values ("first guest", "I got here!");
+INSERT INTO entries (guestName, content) values ("second guest", "Me too!");
+```
+
+### Now retrieve the data
+```mysql
+SELECT * FROM entries;
+```
+
+<details>
+  <summary>Expected Output</summary>
+
+```shell
+  +--------------+-------------------+---------+
+  | guestName    | content           | entryID |
+  +--------------+-------------------+---------+
+  | first guest  | I got here!       |       1 |
+  | second guest | Me too!           |       2 |
+  +--------------+-------------------+---------+
+  2 rows in set (0.00 sec)
+  mysql>
+
+```
+
+  
+</details>
+
+
+
+
+
+
+
+
 
