@@ -47,6 +47,14 @@ Repository of my study from [Gooogle Cloud Computing Foundations Certificate](ht
   - [8.1 Create a Cloud SQL instance](#81-create-a-cloud-sql-instance)
   - [8.2 Connect to your instance using the mysql client in Cloud Shell](#82-connect-to-your-instance-using-the-mysql-client-in-cloud-shell)
   - [8.3 Create a database and upload data](#83-create-a-database-and-upload-data)
+- [9. Cloud Endpoints](#9-cloud-endpoints)
+  - [9.1 Getting the sample code](#91-getting-the-sample-code)
+  - [9.2 Deploying the Endpoints configuration](#92-deploying-the-endpoints-configuration)
+  - [9.3 Deploying the API backend](#93-deploying-the-api-backend)
+  - [9.4 Sending requests to the API](#94-sending-requests-to-the-api)
+  - [9.5 Tracking API activity](#95-tracking-api-activity)
+  - [9.6 Add a quota to the API](#96-add-a-quota-to-the-api)
+
 
 
 
@@ -1322,7 +1330,74 @@ SELECT * FROM entries;
   
 </details>
 
+## 9. Cloud Endpoints
+## 9.1 Getting the sample code
+### To get the sample API and scripts
+```shell
+gsutil cp gs://spls/gsp164/endpoints-quickstart.zip .
+unzip endpoints-quickstart.zip
+```
+### To change to the directory that contains the sample code
+```shell
+cd endpoints-quickstart
+```
 
+## 9.2 Deploying the Endpoints configuration
+> To publish a REST API to Endpoints, an OpenAPI configuration file that describes the API is required.
+
+### To deploy the Endpoints configuration
+> In the endpoints-qwikstart directory.
+
+```shell
+cd scripts
+```
+### Run the following script
+```shell
+./deploy_api.sh
+```
+
+> Cloud Endpoints uses the host field in the OpenAPI configuration file to identify the service.
+>
+> When you prepare an OpenAPI configuration file for your own service, you will need to sets the ID of your Cloud project as part of the name configured in the host field.
+>
+> The script then deploys the OpenAPI configuration to Service Management using the command: `gcloud endpoints services deploy openapi.yaml`
+>
+> As it is creating and configuring the service, Service Management outputs some information to the console. You can safely ignore the warnings about the paths in openapi.yaml not requiring an API key.
+
+Expected Output
+```shell
+Service Configuration [2017-02-13-r2] uploaded for service [airports-api.endpoints.example-project.cloud.goog]
+```
+
+## 9.4 Deploying the API backend
+> To deploy the API backend, make sure you are in the endpoints-quickstart/scripts directory. 
+
+### To deploy the API backend run the script
+```shell
+./deploy_app.sh ../app/app_template.yaml 
+```
+> The script runs the following command to create an App Engine flexible environment in the \<REGION\> region: `gcloud app create --region="$REGION"`
+>
+> It takes a couple minutes to create the App Engine flexible backend.
+
+> [!Note]
+> If you get an `ERROR: NOT_FOUND: Unable to retrieve P4SA: from GAIA` message, rerun the `deploy_app.sh` script.
+You'll see the following displayed in Cloud Shell after the App Engine is created:
+
+Success! The app is now created. Please use `gcloud app deploy` to deploy your first app.
+The script goes on to run the gcloud app deploy command to deploy the sample API to App Engine.
+
+Expected Output
+```shell
+Deploying ../app/app_template.yaml...You are about to deploy the following services:
+```
+> It takes several minutes for the API to be deployed to App Engine.
+> You'll see a line like the following when the API is successfully deployed to App Engine:
+
+Expected Output
+```shell
+Deployed service [default] to [https://example-project.appspot.com]
+```
 
 
 
