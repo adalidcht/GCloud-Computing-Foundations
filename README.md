@@ -1255,7 +1255,7 @@ gsutil rm gs://YOUR-BUCKET-NAME/ada.jpg
 - From the **Navigation menu** > **SQL**.
 - Click **Create Instance**.
 - Choose MySQL database engine.
-- Enter **Instance ID** as myinstance.
+- Enter **Instance ID** as `myinstance`.
 - In the password field click on the Generate link and the eye icon to see the password. Save the password.
 - Select the database version as MySQL 8.
 - For **Choose a Cloud SQL edition**, select **Enterprise edition**.
@@ -1275,7 +1275,7 @@ gsutil rm gs://YOUR-BUCKET-NAME/ada.jpg
 ## 8.2 Connect to your instance using the mysql client in Cloud Shell
 ### To connect to your Cloud SQL
 ```shelll
-gcloud sql connect myinstance --user=root
+gcloud sql connect <myinstance> --user=root
 ```
 
 > Enter your root password when prompted. **Note:** The cursor will not move.
