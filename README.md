@@ -1460,8 +1460,80 @@ At the bottom of the **Endpoints graphs**, under **Method**, click the **View lo
 
 > Enter CTRL+C in Cloud Shell to stop the script.
 
+## 9.6 Add a quota to the API
+> [!Note]
+> This is a beta release of Quotas. This feature might be changed in backward-incompatible ways and is not subject to any SLA or deprecation policy.
+
+> Cloud Endpoints lets you set quotas so you can control the rate at which applications can call your API. Quotas can be used to protect your API from excessive usage by a single client.
+
+### Deploy the Endpoints configuration that has a quota
+```shell
+./deploy_api.sh ../openapi_with_ratelimit.yaml
+```
+
+### Redeploy your app to use the new Endpoints configuration 
+> This may take a few minutes
 
 
+```shell
+./deploy_app.sh ../app/app_template.yaml 
+```
+
+- In the Console, navigate to **Navigation menu** > **APIs & Services** > **Credentials**.
+- Click **Create credentials** and choose **API key**. A new API key is displayed on the screen.
+- Click the Copy to clipboard icon to copy it to your clipboard.
+
+### In Cloud Shell, type the following. 
+> Replace YOUR-API-KEY with the API key you just created
+
+```shell
+export API_KEY=YOUR-API-KEY
+```
+
+### Send your API a request using the API key variable you just created
+```shell
+./query_api_with_key.sh $API_KEY
+```
+
+Expected Output
+```shell
+curl -H 'x-api-key: AIzeSyDbdQdaSdhPMdiAuddd_FALbY7JevoMzAB' "https://example-project.appspot.com/airportName?iataCode=SFO"
+San Francisco International Airport
+```
+
+> The API now has a limit of 5 requests per second.
+
+### To send traffic to the API and trigger the quota limit
+```shell
+./generate_traffic_with_key.sh $API_KEY
+```
+
+> After running the script for 5-10 seconds, enter **CTRL+C** in Cloud Shell to stop the script.
+
+### Send another authenticated request to the API
+```shell
+./query_api_with_key.sh $API_KEY
+```
+
+<details>
+  <summary>Expected Output</summary>
+
+  ```shell
+  {
+     "code": 8,
+     "message": "Insufficient tokens for quota 'airport_requests' and limit 'limit-on-airport-requests' of service 'example-project.appspot.com' for consumer 'api_key:AIzeSyDbdQdaSdhPMdiAuddd_FALbY7JevoMzAB'.",
+     "details": [
+      {
+       "@type": "type.googleapis.com/google.rpc.DebugInfo",
+       "stackEntries": [],
+       "detail": "internal"
+      }
+     ]
+    }
+  ```
+</details>
+
+> If you get a different response, try running the generate_traffic_with_key.sh script again and retry.
 
 
 
