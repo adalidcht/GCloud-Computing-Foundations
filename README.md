@@ -43,6 +43,11 @@ Repository of my study from [Gooogle Cloud Computing Foundations Certificate](ht
   - [7.6 List details for an object](#76-list-details-for-an-object)
   - [7.7 Make your object publicly accessible](#77-make-your-object-publicly-accessible)
   - [7.8 Remove public access](#78-remove-public-access)
+- [8. Cloud SQL for MySQL](#8-cloud-sql-for-mysql)
+  - [8.1 Create a Cloud SQL instance](#81-create-a-cloud-sql-instance)
+  - [8.2 Connect to your instance using the mysql client in Cloud Shell](#82-connect-to-your-instance-using-the-mysql-client-in-cloud-shell)
+  - [8.3 Create a database and upload data](#83-create-a-database-and-upload-data)
+
 
 
 ## Cloud Shell `>_`
@@ -1242,3 +1247,26 @@ gsutil rm gs://YOUR-BUCKET-NAME/ada.jpg
 </details>
 
 > Refresh the console. The copy of the image file is no longer stored on Cloud Storage (though the copy you made in the image-folder/ folder still exists). 
+
+## 8. Create a Cloud SQL instance
+### Cloud Console
+- From the **Navigation menu** > **SQL**.
+- Click **Create Instance**.
+- Choose MySQL database engine.
+- Enter **Instance ID** as myinstance.
+- In the password field click on the Generate link and the eye icon to see the password. Save the password.
+- Select the database version as MySQL 8.
+- For **Choose a Cloud SQL edition**, select **Enterprise edition**.
+- For **Preset** choose Development (4 vCPU, 16 GB RAM, 100 GB Storage, Single zone).
+
+> [!Warning]
+> If you choose a preset larger than Development, your project will be flagged and your lab will be terminated.
+
+- Set **Region** as <REGION>.
+- Set the **Multi zones** (Highly available) > **Primary Zone** field as <ZONE>.
+- Click **CREATE INSTANCE**.
+ 
+> It might take a few minutes for the instance to be created. Once it is, you will see a green checkmark next to the instance name.
+
+- Click on the Cloud SQL instance. The SQL Overview page opens.
+
